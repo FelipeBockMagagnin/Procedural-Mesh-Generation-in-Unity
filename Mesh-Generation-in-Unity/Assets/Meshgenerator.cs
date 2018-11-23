@@ -7,9 +7,18 @@ public class Meshgenerator : MonoBehaviour {
 
 	
 	Mesh mesh;
+	public float altura;
+	public float noisex;
+	public float noiseZ;
+
+	public float scrollSpeed = 0;
+	Renderer rend;
+
+	public Material material;
 
 	Vector3[] vertices;
 	int[] triangles;
+	Vector2[] uvs;
 
 	public int xSize = 100;
 	public int zSize = 100;
@@ -19,13 +28,17 @@ public class Meshgenerator : MonoBehaviour {
 	void Start () {
 		mesh = new Mesh();
 		GetComponent<MeshFilter>().mesh = mesh;	
-
-		StartCoroutine(CreateShape());
+		rend = GetComponent<Renderer> ();
+		
 		
 	}
 
 	void Update(){
+		
+		float offset = Time.time * scrollSpeed;
+        rend.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
 		UpdateMesh();
+		CreateShape();
 	}
 
 	void UpdateMesh(){
@@ -35,14 +48,16 @@ public class Meshgenerator : MonoBehaviour {
 		mesh.triangles = triangles;
 
 		mesh.RecalculateNormals();
+
+		mesh.uv = uvs;
 	}
 	
-	IEnumerator CreateShape(){
+	void CreateShape(){
 		vertices = new Vector3[(xSize + 1) * (zSize + 1)];		
 
 		for (int i = 0, z = 0; z <= zSize; z++){
 			for (int x = 0; x <= xSize; x++){
-				float y = Mathf.PerlinNoise(x * .3f,z * .3f) * 3f;
+				float y = Mathf.PerlinNoise(x * noisex,z * noiseZ) * altura;
 				vertices[i] = new Vector3(x,y, z);
 				i++;
 			}
@@ -67,11 +82,18 @@ public class Meshgenerator : MonoBehaviour {
 			vert++;
 			tris += 6;
 
-			yield return new WaitForSeconds(.001f);
+		
 			}
 		vert++;
 		}
 
+		uvs = new Vector2[vertices.Length];
+		for (int i = 0, z = 0; z <= zSize; z++){
+			for (int x = 0; x <= xSize; x++){
+				uvs[i] = new Vector2((float)x/xSize, (float)z/zSize);
+				i++;
+			}
+		}
 		
 
 		

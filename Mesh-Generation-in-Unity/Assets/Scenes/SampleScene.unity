@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45116657, g: 0.49981403, b: 0.567819, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -128,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &170076734
 Light:
   m_ObjectHideFlags: 0
@@ -249,13 +249,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.3469356, y: 0, z: 0, w: 0.937889}
-  m_LocalPosition: {x: 26, y: 13.6, z: -1.8}
+  m_LocalRotation: {x: 0.49394187, y: 0, z: 0, w: 0.869495}
+  m_LocalPosition: {x: 26, y: 27.8, z: 4.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 40.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 59.2, y: 0, z: 0}
 --- !u!1 &1598434258
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +285,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a9d4ea0267d91439dc0b5e680ffc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  altura: 3
+  noisex: 0.3
+  noiseZ: 0.3
+  scrollSpeed: 0.3
+  material: {fileID: 2100000, guid: 6fb1f12ee4fd97d4897bf25d00dfd900, type: 2}
   xSize: 50
   zSize: 50
 --- !u!23 &1598434260
@@ -302,7 +307,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6fb1f12ee4fd97d4897bf25d00dfd900, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
