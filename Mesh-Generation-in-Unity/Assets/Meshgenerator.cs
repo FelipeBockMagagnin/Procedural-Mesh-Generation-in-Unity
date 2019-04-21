@@ -18,10 +18,15 @@ public class Meshgenerator : MonoBehaviour {
 
 	Vector3[] vertices;
 	int[] triangles;
-	Vector2[] uvs;
+	Color[] colors;
 
 	public int xSize = 100;
 	public int zSize = 100;
+
+	public Gradient gradient;
+
+	float minTerrainHeight;
+	float maxTerrainHeight;
 
 
 	// Use this for initialization
@@ -34,9 +39,6 @@ public class Meshgenerator : MonoBehaviour {
 	}
 
 	void Update(){
-		
-		float offset = Time.time * scrollSpeed;
-        rend.material.SetTextureOffset("_MainTex", new Vector2(offset, 0));
 		UpdateMesh();
 		CreateShape();
 	}
@@ -49,7 +51,7 @@ public class Meshgenerator : MonoBehaviour {
 
 		mesh.RecalculateNormals();
 
-		mesh.uv = uvs;
+		mesh.colors = colors;
 	}
 	
 	void CreateShape(){
@@ -59,6 +61,12 @@ public class Meshgenerator : MonoBehaviour {
 			for (int x = 0; x <= xSize; x++){
 				float y = Mathf.PerlinNoise(x * noisex,z * noiseZ) * altura;
 				vertices[i] = new Vector3(x,y, z);
+				if(y > maxTerrainHeight){
+					maxTerrainHeight = y;
+				}	
+				if(y < minTerrainHeight){
+					minTerrainHeight = y;
+				}			
 				i++;
 			}
 		}
@@ -87,10 +95,11 @@ public class Meshgenerator : MonoBehaviour {
 		vert++;
 		}
 
-		uvs = new Vector2[vertices.Length];
+		colors = new Color[vertices.Length];
 		for (int i = 0, z = 0; z <= zSize; z++){
 			for (int x = 0; x <= xSize; x++){
-				uvs[i] = new Vector2((float)x/xSize, (float)z/zSize);
+				float height = Mathf.InverseLerp(minTerrainHeight, maxTerrainHeight, vertices[i].y);
+				colors[i] = gradient.Evaluate(height);
 				i++;
 			}
 		}
